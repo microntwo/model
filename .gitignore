@@ -1,0 +1,16 @@
+# .gitignore
+
+# Burn artifacts
+/artifacts/
+
+# Logs
+/logs/
+
+# Cargo build files
+/target/
+
+# DataSet
+/DisasterData_split/
+
+# test_images
+/test_images/

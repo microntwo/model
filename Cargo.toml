@@ -1,0 +1,29 @@
+[package]
+name = "model"
+version = "1.0.0"
+edition = "2021"
+
+[features]
+default = ["wgpu-backend"]
+wgpu-backend = ["burn/wgpu"]
+ndarray-backend = ["burn/ndarray", "burn-ndarray"]
+tch-gpu = ["burn/tch"]
+
+[dependencies]
+burn = { version = "~0.17", features = ["train", "vision", "network"] }
+burn-ndarray = { version = "~0.17", optional = true }
+
+image = { version = "0.25", default-features = false, features = [
+    "jpeg",
+    "png",
+] }
+
+# Logging
+log = "0.4"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+tracing-appender = "0.2"
+
+# Other
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive"] }
