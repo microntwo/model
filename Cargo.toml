@@ -17,6 +17,8 @@ image = { version = "0.25", default-features = false, features = [
     "jpeg",
     "png",
 ] }
+rand = "0.9.1"
+imageproc = "0.25"
 
 # Logging
 log = "0.4"

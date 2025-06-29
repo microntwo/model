@@ -60,8 +60,8 @@ fn main() -> Result<()> {
             tracing::info!("Starting training mode with Hybrid CNN v1.0.0...");
             let config = TrainingConfig::new(AdamWConfig::new())
                 .with_batch_size(32)
-                .with_num_epochs(20)
-                .with_learning_rate(1e-4);
+                .with_num_epochs(5)
+                .with_learning_rate(5e-5);
 
             train::<MyAutodiffBackend>(device, &artifact_dir, config);
         }

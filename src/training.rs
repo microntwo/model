@@ -17,7 +17,7 @@ use burn::{
 };
 use std::time::Instant;
 
-pub const NUM_CLASSES: usize = 4;
+pub const NUM_CLASSES: usize = 5;
 
 impl<B: Backend> Cnn<B> {
     pub fn forward_classification(

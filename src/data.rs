@@ -54,10 +54,10 @@ impl<B: Backend> Batcher<B, DisasterImageItem, ClassificationBatch<B>>
     fn batch(&self, items: Vec<DisasterImageItem>, device: &B::Device) -> ClassificationBatch<B> {
         let images: Vec<Tensor<B, 3>> = items
             .iter()
-            .map(|item| load_image_as_tensor_data::<B>(&item.image_path).unwrap())
+            .map(|item| load_image_as_tensor_data::<B>(&item.image_path, item.is_train).unwrap())
             .map(|data| {
                 Tensor::<B, 3>::from_data(data.convert::<B::FloatElem>(), &device)
-                    .permute([2, 0, 1]) // HWC to CHW
+                    .permute([2, 0, 1])
             })
             .map(|tensor| tensor / 255.0)
             .collect();

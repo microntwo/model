@@ -15,6 +15,7 @@ pub fn infer<B: Backend>(device: B::Device, artifact_dir: &str, image_path: &Pat
     tracing::info!("Loading model from: {}", artifact_dir);
 
     let _config = crate::training::TrainingConfig::load(format!("{artifact_dir}/config.json"))?;
+
     let record = CompactRecorder::new().load(format!("{artifact_dir}/model").into(), &device)?;
 
     let model: Cnn<B> = Cnn::new(NUM_CLASSES, &device).load_record(record);
@@ -25,6 +26,7 @@ pub fn infer<B: Backend>(device: B::Device, artifact_dir: &str, image_path: &Pat
     let item = DisasterImageItem {
         image_path: image_path.to_path_buf(),
         label: 0,
+        is_train: false,
     };
 
     let batch = batcher.batch(vec![item], &device);
@@ -34,7 +36,7 @@ pub fn infer<B: Backend>(device: B::Device, artifact_dir: &str, image_path: &Pat
     let predicted = output.argmax(1).flatten::<1>(0, 1).into_data();
     let predicted_idx = predicted.iter::<i64>().next().unwrap() as usize;
 
-    let class_names = ["fire_and_smoke", "flood", "wildfire", "normal"];
+    let class_names = ["fire_and_smoke", "flood", "wildfire", "landslide", "normal"];
     let predicted_class = class_names.get(predicted_idx).unwrap_or(&"unknown");
 
     println!("\nPrediction for '{}':", image_path.display());
